@@ -171,7 +171,3 @@ EMOS-Project/
       contexts/AuthContext.tsx  # Auth state management
     package.json
 ```
-
-## License
-
-MIT
