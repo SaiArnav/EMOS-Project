@@ -29,7 +29,7 @@ app.include_router(chat.router)
 @app.on_event("startup")
 def startup_event():
     init_db()
-    print("✅ Database initialized successfully!")
+    print("Database initialized successfully!")
     # Create a default user if none exists (frontend hardcodes USER_ID=1)
     db = SessionLocal()
     try:
@@ -37,14 +37,14 @@ def startup_event():
             default_user = User(id=1, email="demo@emos.com", name="Demo User", password_hash="demo123")
             db.add(default_user)
             db.commit()
-            print("✅ Default user created (id=1, email=demo@emos.com)")
+            print("Default user created (id=1, email=demo@emos.com)")
     finally:
         db.close()
 
 # A simple test endpoint to check if the backend is running
 @app.get("/")
 def root():
-    return {"message": "EMOS Backend is running! 🚀"}
+    return {"message": "EMOS Backend is running!"}
 
 # Health check endpoint for Docker
 @app.get("/health")
