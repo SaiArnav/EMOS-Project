@@ -41,7 +41,7 @@ async def extract_meeting_data(transcript_text: str):
             {"role": "user", "content": prompt}
         ],
         "temperature": 0.1,  # Low temperature = consistent, predictable output
-        "max_tokens": 4000
+        "max_tokens": 16000
     }
     
     try:
