@@ -5,9 +5,11 @@ from ..database import get_db
 from ..models.db_models import User, Meeting, Commitment
 import httpx
 import os
+from pathlib import Path
 from dotenv import load_dotenv
 
-load_dotenv()
+backend_dir = Path(__file__).resolve().parent.parent.parent
+load_dotenv(backend_dir / ".env")
 
 router = APIRouter(prefix="/chat", tags=["Chat"])
 

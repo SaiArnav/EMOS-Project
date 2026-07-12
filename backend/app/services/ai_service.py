@@ -1,10 +1,12 @@
 import httpx
 import os
 import json
+from pathlib import Path
 from .prompts import EXTRACTION_PROMPT
 from dotenv import load_dotenv
 
-load_dotenv()
+backend_dir = Path(__file__).resolve().parent.parent.parent
+load_dotenv(backend_dir / ".env")
 
 FIREWORKS_API_KEY = os.getenv("FIREWORKS_API_KEY")
 FIREWORKS_MODEL = os.getenv("FIREWORKS_MODEL", "accounts/fireworks/models/glm-5p1")
