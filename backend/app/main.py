@@ -3,6 +3,16 @@ from fastapi.middleware.cors import CORSMiddleware
 from .database import init_db, SessionLocal
 from .models.db_models import User
 from .routes import auth, meetings, chat
+import shutil
+from pathlib import Path
+
+# Auto-create .env from .env.example if missing
+backend_dir = Path(__file__).resolve().parent.parent
+env_file = backend_dir / ".env"
+example_file = backend_dir / ".env.example"
+if not env_file.exists() and example_file.exists():
+    shutil.copy(example_file, env_file)
+    print("Created .env from .env.example - please add your FIREWORKS_API_KEY!")
 
 # Create the FastAPI application
 app = FastAPI(
