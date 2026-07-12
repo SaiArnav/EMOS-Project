@@ -16,3 +16,4 @@ Instead of just summarizing meetings, EMOS **remembers every decision, every com
 - **🧠 Organizational Memory** – Build a searchable knowledge base across all meetings
 
 ## 🏗️ Architecture
+..
