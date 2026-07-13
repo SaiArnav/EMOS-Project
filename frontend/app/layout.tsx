@@ -4,6 +4,7 @@ import "./globals.css";
 import { useState, useEffect, createContext, useContext, ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { API_BASE } from "./config";
 import {
   LayoutDashboard,
   FolderOpen,
@@ -200,7 +201,7 @@ function AppShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (authUser) {
-      fetch(`http://localhost:8000/meetings/user/${authUser.id}`)
+      fetch(`${API_BASE}/meetings/user/${authUser.id}`)
         .then((res) => res.json())
         .then(setProfile)
         .catch(() => {});

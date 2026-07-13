@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE } from "../config";
 import { Send, Loader2, Bot, Sparkles } from "lucide-react";
 
 interface Message {
@@ -40,7 +41,7 @@ export default function ChatPage() {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8000/chat/ask", {
+      const response = await fetch(`${API_BASE}/chat/ask`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ user_id: authUser.id, question: userMessage.content }),
@@ -62,7 +63,7 @@ export default function ChatPage() {
     } catch (err) {
       setMessages((prev) => [
         ...prev,
-        { id: messages.length + 2, role: "assistant", content: "Network error. Make sure your backend is running on http://localhost:8000" },
+        { id: messages.length + 2, role: "assistant", content: `Network error. Make sure your backend is running at ${API_BASE}` },
       ]);
     } finally {
       setLoading(false);

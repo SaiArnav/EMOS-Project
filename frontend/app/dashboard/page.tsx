@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { useTheme } from "../layout";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE } from "../config";
 import {
   AlertCircle,
   Clock,
@@ -165,7 +166,7 @@ export default function DashboardPage() {
     const user = authUserRef.current;
     if (!user) return;
     try {
-      const res = await fetch(`http://localhost:8000/meetings/dashboard/${user.id}`);
+      const res = await fetch(`${API_BASE}/meetings/dashboard/${user.id}`);
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const json = await res.json();
       setData(json);
@@ -210,7 +211,7 @@ export default function DashboardPage() {
 
   const handleToggle = async (commitmentId: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/meetings/commitments/${commitmentId}/toggle`, { method: "PATCH" });
+      const res = await fetch(`${API_BASE}/meetings/commitments/${commitmentId}/toggle`, { method: "PATCH" });
       if (res.ok) fetchDashboard();
     } catch (e) {
       console.error("Failed to toggle commitment", e);

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE } from "../config";
 import {
   Upload, FileText, Loader2, Trash2, Calendar, File,
   ChevronDown, ChevronRight, CheckCircle, AlertTriangle,
@@ -52,7 +53,7 @@ export default function WorkspacePage() {
     if (!authUser) return;
     setLoadingMeetings(true);
     try {
-      const res = await fetch(`http://localhost:8000/meetings/list/${authUser.id}`);
+      const res = await fetch(`${API_BASE}/meetings/list/${authUser.id}`);
       if (res.ok) {
         setMeetings(await res.json());
       }
@@ -72,7 +73,7 @@ export default function WorkspacePage() {
     setExpandedId(meetingId);
     setLoadingDetail(true);
     try {
-      const res = await fetch(`http://localhost:8000/meetings/${meetingId}/detail`);
+      const res = await fetch(`${API_BASE}/meetings/${meetingId}/detail`);
       if (res.ok) {
         setDetail(await res.json());
       }
@@ -85,7 +86,7 @@ export default function WorkspacePage() {
 
   const handleToggle = async (commitmentId: number) => {
     try {
-      const res = await fetch(`http://localhost:8000/meetings/commitments/${commitmentId}/toggle`, { method: "PATCH" });
+      const res = await fetch(`${API_BASE}/meetings/commitments/${commitmentId}/toggle`, { method: "PATCH" });
       if (res.ok && expandedId) fetchDetail(expandedId);
     } catch (e) {
       console.error("Failed to toggle commitment", e);
@@ -108,7 +109,7 @@ export default function WorkspacePage() {
     formData.append("file", file);
 
     try {
-      const res = await fetch("http://localhost:8000/meetings/upload", {
+      const res = await fetch(`${API_BASE}/meetings/upload`, {
         method: "POST",
         body: formData,
       });
@@ -136,7 +137,7 @@ export default function WorkspacePage() {
 
     setDeletingId(meetingId);
     try {
-      const res = await fetch(`http://localhost:8000/meetings/${meetingId}`, { method: "DELETE" });
+      const res = await fetch(`${API_BASE}/meetings/${meetingId}`, { method: "DELETE" });
       if (res.ok) {
         setMeetings((prev) => prev.filter((m) => m.id !== meetingId));
         if (expandedId === meetingId) { setExpandedId(null); setDetail(null); }

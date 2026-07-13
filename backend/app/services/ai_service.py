@@ -57,18 +57,15 @@ async def extract_meeting_data(transcript_text: str):
     }
     
     try:
-        print(f"[AI] Calling Fireworks API with model={model}, key={api_key[:10]}...")
         async with httpx.AsyncClient(timeout=180.0) as client:
             response = await client.post(
                 "https://api.fireworks.ai/inference/v1/chat/completions",
                 headers=headers,
                 json=payload
             )
-            print(f"[AI] Response status: {response.status_code}")
             response.raise_for_status()
             data = response.json()
             content = data["choices"][0]["message"]["content"]
-            print(f"[AI] Content length: {len(content)} chars")
             
             # Strip BOM and whitespace
             content = content.strip().lstrip("\ufeff")
@@ -138,9 +135,6 @@ async def extract_meeting_data(transcript_text: str):
             "questions": []
         }
     except Exception as e:
-        import traceback
-        print(f"[AI] EXCEPTION: {type(e).__name__}: {e}")
-        traceback.print_exc()
         return {
             "error": f"API error: {str(e)}",
             "summary": "AI service temporarily unavailable.",
